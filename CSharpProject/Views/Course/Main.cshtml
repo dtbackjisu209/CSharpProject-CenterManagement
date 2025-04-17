@@ -1,0 +1,147 @@
+﻿@model CourseMainView
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Khóa học</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-buttons {
+            margin: 40px 0 30px 0;
+        }
+
+            .top-buttons form {
+                margin: 5px;
+            }
+
+        .btn {
+            min-width: 120px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+            .btn:hover {
+                transform: scale(1.05);
+            }
+
+        .search-section {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+            .card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+        .card-text {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border-radius: 0.6rem;
+        }
+
+        .btn-block {
+            border-radius: 0.6rem;
+            font-size: 1.05rem;
+        }
+
+        .container {
+            max-width: 1140px;
+            padding-bottom: 50px;
+        }
+
+        .search-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="top-buttons d-flex flex-wrap justify-content-center">
+            <form asp-action="Main" method="get">
+                <button type="submit" class="btn btn-outline-primary">Main</button>
+            </form>
+            <form asp-action="Add" method="get">
+                <button type="submit" class="btn btn-outline-success">Add</button>
+            </form>
+            <form asp-action="Edit" method="get">
+                <button type="submit" class="btn btn-outline-warning">Edit</button>
+            </form>
+            <form asp-action="Delete" method="get">
+                <button type="submit" class="btn btn-outline-danger">Delete</button>
+            </form>
+            <form asp-controller="Authority" asp-action="Logout" method="get">
+                <button type="submit" class="btn btn-dark" name="Session" value="Quanly">Logout</button>
+            </form>
+            <form asp-controller="Course" asp-action="Statistic" method="get">
+                <button type="submit" class="btn btn-info">Thống kê</button>
+            </form>
+        </div>
+
+     
+        <div class="search-section">
+            <form asp-action="Search" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="FindingName" class="search-label">Tìm khóa học</label>
+                    <input asp-for="FindingName" class="form-control" placeholder="Nhập tên khóa học cần tìm" />
+                    <span asp-validation-for="FindingName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center mt-4">
+                    <input type="hidden" name="FromView" value="Main" />
+                    <button type="submit" class="btn btn-primary btn-block">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+
+     
+        <div class="row">
+            @foreach (var course in Model.courses)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@course.CourseName</h5>
+                            <p class="card-text"><strong>ID:</strong> @course.CourseID</p>
+                            <p class="card-text"><strong>Giảng viên:</strong> @course.CourseTeacher</p>
+                            <p class="card-text"><strong>Ngày học:</strong> @course.CourseDate.ToShortDateString()</p>
+                            <p class="card-text"><strong>Học phí:</strong> @string.Format("{0:N0}", course.CourseTuition) VNĐ</p>
+                            <p class="card-text"><strong>Số học viên:</strong> @course.CourseNumber</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

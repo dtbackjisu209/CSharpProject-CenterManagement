@@ -1,0 +1,81 @@
+﻿@model StatisticData
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Khóa học</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .course-info .card {
+            margin-bottom: 20px;
+        }
+
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h2 class="mb-4 text-primary">Thông tin Khóa học</h2>
+
+        <div class="card course-info shadow-sm">
+            <div class="card-body">
+                <p><strong>Mã khóa học:</strong> @Model.course.CourseID</p>
+                <p><strong>Tên Khóa học:</strong> @Model.course.CourseName</p>
+                <p><strong>Giảng viên:</strong> @Model.course.CourseTeacher</p>
+                <p><strong>Ngày khai giảng:</strong> @Model.course.CourseDate.ToString("dd/MM/yyyy")</p>
+                <p><strong>Học phí:</strong> @Model.course.CourseTuition.ToString("N0") VNĐ</p>
+                <p><strong>Số học viên tối đa:</strong> @Model.course.CourseNumber</p>
+                <p><strong>Số học viên đã đăng kí:</strong> @Model.count / @Model.course.CourseNumber</p>
+            </div>
+        </div>
+
+        <div class="section-title text-primary">📊 Thống kê doanh thu theo thời gian</div>
+
+        <table class="table table-bordered table-hover mt-3 shadow-sm bg-white">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ngày</th>
+                    <th>Doanh thu (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int totalrevenue = 0;
+                    int start = 0;
+                }
+
+                @foreach (var item in Model.coursedates)
+                {
+                    start++;
+                    totalrevenue += Model.course.CourseTuition;
+                    <tr>
+                        <td>@start</td>
+                        <td>@item.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                        <td>@totalrevenue.ToString("N0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="card bg-light mt-3 shadow-sm">
+            <div class="card-body text-right">
+                <h5 class="text-success mb-0">💰 Tổng doanh thu: @totalrevenue.ToString("N0") VNĐ</h5>
+            </div>
+        </div>
+
+</body>
+</html>

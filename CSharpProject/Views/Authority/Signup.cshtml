@@ -1,0 +1,109 @@
+﻿<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+@model CSharpProject.Models.Student
+
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        background-color: #ffffff;
+    }
+
+        .card h2 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    .input-group-text {
+        background-color: #f1f1f1;
+        border: none;
+    }
+
+    .form-control::placeholder {
+        color: #ccc;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        font-weight: bold;
+        border-radius: 50px;
+        transition: 0.3s ease-in-out;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    a {
+        color: #007bff;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 500px; width: 100%;">
+        <div class="card-body">
+            <h2 class="text-center">@ViewData["Title"]</h2>
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <form id="signUpForm" asp-controller="Authority" asp-action="Signup" method="post" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label asp-for="StudentName" class="font-weight-bold">👤 Tên sinh viên</label>
+                    <input asp-for="StudentName" class="form-control" placeholder="Nhập tên sinh viên" required />
+                    <span asp-validation-for="StudentName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentBirth" class="font-weight-bold">📅 Ngày sinh</label>
+                    <input asp-for="StudentBirth" class="form-control" type="date" required />
+                    <span asp-validation-for="StudentBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentPhone" class="font-weight-bold">📱 Số điện thoại</label>
+                    <input asp-for="StudentPhone" class="form-control" placeholder="Nhập số điện thoại" required />
+                    <span asp-validation-for="StudentPhone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentEmail" class="font-weight-bold">✉️ Email</label>
+                    <input asp-for="StudentEmail" class="form-control" type="email" placeholder="Nhập email" required />
+                    <span asp-validation-for="StudentEmail" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentAccount" class="font-weight-bold">👤 Tài khoản</label>
+                    <input asp-for="StudentAccount" class="form-control" placeholder="Nhập tài khoản" required />
+                    <span asp-validation-for="StudentAccount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StudentPass" class="font-weight-bold">🔒 Mật khẩu</label>
+                    <input asp-for="StudentPass" class="form-control" type="password" placeholder="Nhập mật khẩu" required />
+                    <span asp-validation-for="StudentPass" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+                </div>
+            </form>
+
+            <p class="text-center mt-3">
+                Đã có tài khoản?
+                <a href="@Url.Action("Login", "Authority")"><strong>Đăng nhập tại đây</strong></a>
+            </p>
+        </div>
+    </div>
+</div>
